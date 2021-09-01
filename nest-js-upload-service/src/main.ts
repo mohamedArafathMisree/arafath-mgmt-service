@@ -42,7 +42,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new WsAdapter(app) as any);
   app.setGlobalPrefix('api');
-  await app.listen(5000);
+  await app.listen(7000);
 }
 
 bootstrap();

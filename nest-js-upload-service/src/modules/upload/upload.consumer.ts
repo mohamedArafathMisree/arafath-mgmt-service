@@ -104,12 +104,14 @@ export class UploadConsumer {
       port: 8000,
     });
 
+    let _result = JSON.stringify(result);
+
     (async () => {
       try {
        
         await socket.invokePublish(
           'fileUploadChannel',
-          `Completed job with result ${result}`,
+          `Completed job with result ${_result}`,
         );
         console.log(result);
       } catch (error) {
