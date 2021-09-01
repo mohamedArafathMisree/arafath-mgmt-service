@@ -22,7 +22,7 @@ export class StudentService {
   }
 
   async create(studentCreateDTO: StudentCreateDTO[]): Promise<Student[]> {
-    // const student = this.studentRepository.create(studentCreateDTO);
+   //const student = this.studentRepository.create(studentCreateDTO);
 
     
     console.log('DTO',studentCreateDTO)
@@ -31,7 +31,7 @@ export class StudentService {
     };
 
     const query = gql`
-      mutation createStudents($createStudentsArray:  [StudentInput!]!) {
+      mutation createStudents($createStudentsArray:  [StudentInput]!) {
         createStudents(input: { createMultiple: $createStudentsArray }) {
           __typename
         }
@@ -40,7 +40,7 @@ export class StudentService {
 
     try {
       const data = await request(
-        'http://localhost:5000/graphiql',
+        'http://localhost:5000/graphql',
         query,
         variables,
       );
@@ -52,7 +52,7 @@ export class StudentService {
       return error;
     }
 
-    // return await this.studentRepository.save(student);
+   // return await this.studentRepository.save(student);
   }
 
   update(id: string, updateStudentInput: UpdateStudentInput) {
