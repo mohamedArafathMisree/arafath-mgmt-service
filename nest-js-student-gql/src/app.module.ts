@@ -3,9 +3,15 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { StudentModule } from './student/student.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: 'dev.env',
+    }),
     StudentModule,
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), 'src/graphql-schema.gql'),
@@ -24,4 +30,4 @@ import { StudentModule } from './student/student.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

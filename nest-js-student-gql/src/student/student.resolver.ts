@@ -18,8 +18,6 @@ export class StudentResolver {
     @Args({ name: 'studentInput', type: () => [StudentCreateDTO] })
     studentCreateDTO: StudentCreateDTO[],
   ) {
-    // create(@Args('studentInput') studentCreateDTO: StudentCreateDTO[]) {
-
     return this.employeeService.create(studentCreateDTO);
   }
 
