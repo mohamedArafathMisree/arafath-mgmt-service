@@ -12,7 +12,7 @@ import { extname } from 'path';
 
 @Controller('upload')
 export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+  constructor(private readonly uploadService: UploadService) { }
 
   @Post()
   @UseInterceptors(
@@ -22,8 +22,6 @@ export class UploadController {
     @UploadedFile() file: Express.Multer.File,
     @Body() data: any,
   ) {
-    console.log(data);
-    console.log(file);
     return await this.uploadService.addToQueue(file);
   }
 }
