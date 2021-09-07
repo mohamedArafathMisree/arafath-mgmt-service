@@ -1,20 +1,21 @@
-import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException, UseFilters,HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StudentCreateDTO } from './dto/create-student.input';
 import { Student } from './entities/student.entity';
 import { UpdateStudentInput } from './dto/update-student.input';
 import { request, gql } from 'graphql-request';
-import { v4 as uuidv4 } from 'uuid';
-import { CREATE_STUDENT_QERY } from './const/queries';
+import { CREATE_STUDENT_QUERY } from './const/queries';
 import { uuid } from "uuidv4";
 import { Logger } from '@nestjs/common';
 import { UserException } from './const/Exceptions';
 import { ConfigService } from '@nestjs/config';
+import { HttpExceptionFilter } from 'src/http-exception.filter';
 
 
 
 @Injectable()
+@UseFilters(new HttpExceptionFilter())
 export class StudentService {
 
   constructor(
@@ -39,7 +40,7 @@ export class StudentService {
 
     variables.createStudentsArray.map((obj) => (obj["id"] = uuid()));
 
-    const query = CREATE_STUDENT_QERY
+    const query = CREATE_STUDENT_QUERY
 
     try {
       const data = await request(
@@ -48,13 +49,9 @@ export class StudentService {
         variables
       );
 
-      // data.createStudents.students
       return data.createStudents.students;
     } catch (error) {
-      Logger.log("error on save", error);
-      // return error;
-      throw new UserException(40010, error, HttpStatus.NOT_IMPLEMENTED);
-
+      throw new UserException(405,'Cannot Create Student',HttpStatus.NOT_IMPLEMENTED);
     }
   }
 

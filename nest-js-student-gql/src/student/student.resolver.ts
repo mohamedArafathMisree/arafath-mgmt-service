@@ -4,6 +4,7 @@ import { StudentService } from './student.service';
 import { Student } from './entities/student.entity';
 import { UpdateStudentInput } from './dto/update-student.input';
 
+
 @Resolver(() => Student)
 export class StudentResolver {
   constructor(private employeeService: StudentService) {}
